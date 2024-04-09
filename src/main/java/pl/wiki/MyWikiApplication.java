@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
-//@EnableEncryptableProperties
 public class MyWikiApplication {
 
 	public static void main(String[] args) {
