@@ -1,37 +1,53 @@
 package pl.wiki.rest.controller;
 
-import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
-import pl.wiki.dao.ArticleRepository;
 import pl.wiki.model.Article;
+import pl.wiki.service.ArticleService;
 
+import java.security.Principal;
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 @RestController
+@Slf4j
 public class ArticleRestController {
-
     @Autowired
-    private ArticleRepository articleRepository;
+    private ArticleService articleService;
 
     @GetMapping("/articles")
     public List<Article> getArticles(){
-        return articleRepository.findAll();
+        return articleService.getAll();
     }
 
     @GetMapping("/articles/{id}")
     public Article getArticle(@PathVariable("id") Long id){
-        Optional<Article> optionalArticle = articleRepository.findById(id);
-        if (optionalArticle.isEmpty()){
-            return null;
-        }
-        return optionalArticle.get();
+        return articleService.get(id);
     }
 
-    /*@PostMapping
+    @PostMapping("/articles")
     public Article createArticle(@RequestBody Article article){
-        return articleRepository.save(article);
-    }*/
+        Jwt user = (Jwt) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        article.setAuthorId((String) user.getClaims().get("sub"));
+        return articleService.save(article);
+    }
+
+    @PutMapping("/articles")
+    public Article updateArticle(@RequestBody Article article){
+        Article article1;
+        article1 = articleService.get(article.getId());
+        if(article1 != null){
+            return articleService.save(article);
+        } else {
+            return null;
+        }
+    }
+
+    @DeleteMapping("/articles/{id}")
+    public void deleteArticle(@PathVariable("id") Long id){
+        articleService.delete(id);
+    }
 }

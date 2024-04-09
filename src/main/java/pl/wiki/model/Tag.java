@@ -17,4 +17,19 @@ public class Tag {
     private String tagName;
     @ManyToMany(mappedBy = "tags")
     Set<Article> articles = new HashSet<>();
+
+    public void addArticle(Article article){
+        this.articles.add(article);
+    }
+
+    public void removeArticle(Article article){
+        this.articles.remove(article);
+    }
+
+    @PreRemove
+    private void removeArticlesAssociations(){
+        for(Article article : this.articles){
+            article.removeTag(this);
+        }
+    }
 }
