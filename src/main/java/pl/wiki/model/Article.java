@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,6 +18,7 @@ public class Article {
     String title;
     String text;
     String authorId;
+    LocalDateTime placedAt;
     @ManyToMany
     @JoinTable(
         name = "article_tag",
@@ -25,6 +27,10 @@ public class Article {
     )
     Set<Tag> tags = new HashSet<>();
 
+    @PrePersist
+    private void setPlacedAt(){
+        this.placedAt = LocalDateTime.now();
+    }
 
     public void addTag(Tag tag){
         this.tags.add(tag);
