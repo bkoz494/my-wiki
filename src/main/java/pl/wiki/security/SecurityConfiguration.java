@@ -67,6 +67,8 @@ public class SecurityConfiguration {
                 .jwt(Customizer.withDefaults()));
         http.oauth2Login(Customizer.withDefaults())
                 .logout(logout -> logout.addLogoutHandler(keycloakLogoutHandler).logoutSuccessUrl("/"));
+        http.headers(headers -> headers
+                .frameOptions(frameOptionsConfig -> frameOptionsConfig.sameOrigin()));
         return http.build();
     }
 

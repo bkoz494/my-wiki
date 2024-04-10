@@ -14,6 +14,11 @@ public class DemoController {
 
     @GetMapping("/demo")
     public String demoPage(){
-        return "demo";
+        return "article";
+    }
+
+    @GetMapping("/articleList")
+    public String articleListPage(){
+        return "articleList";
     }
 }
