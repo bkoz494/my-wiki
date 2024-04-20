@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.servlet.view.RedirectView;
 import pl.wiki.model.Article;
 import pl.wiki.model.Tag;
 import pl.wiki.service.ArticleService;
@@ -38,5 +39,10 @@ public class ArticlesController {
         List<Tag> allTags = tagService.getAll();
         model.addAttribute("allTags", allTags);
         return "article";
+    }
+
+    @GetMapping("/")
+    public RedirectView redirectToArticleList(){
+        return new RedirectView("articleList");
     }
 }

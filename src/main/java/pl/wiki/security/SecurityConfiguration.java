@@ -59,8 +59,8 @@ public class SecurityConfiguration {
         http.authorizeHttpRequests(auth -> auth
                 .requestMatchers(new AntPathRequestMatcher("/editor*"))
                 .hasRole("editor")
-                .requestMatchers(new AntPathRequestMatcher("/"))
-                .permitAll()
+//                .requestMatchers(new AntPathRequestMatcher("/"))
+//                .permitAll()
                 .anyRequest()
                 .authenticated());
         http.oauth2ResourceServer((oauth2) -> oauth2
