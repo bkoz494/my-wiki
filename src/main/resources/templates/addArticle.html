@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-  <div th:replace="headers :: headers"></div>
-  <link th:href="@{/css/articleList.css}" rel="stylesheet" type="text/css"/>
+    <div th:replace="headers :: headers"></div>
+    <link th:href="@{/css/articleList.css}" rel="stylesheet" type="text/css"/>
+    <script src="trumbowyg/dist/trumbowyg.min.js"></script>
+    <link rel="stylesheet" href="trumbowyg/dist/ui/trumbowyg.min.css">
 </head>
 <body>
 <div th:replace="fragments :: navigation">Navigation bar</div>
@@ -14,7 +16,7 @@
         <h3>Add Title</h3>
         <input type="text" class="form-control" th:field="${article.title}">
         <h3>Add article content</h3>
-        <textarea class="form-control" rows="5" th:firld="${article.text}"></textarea>
+        <textarea id="article" class="form-control" rows="5" th:firld="${article.text}"></textarea>
 
       </div>
       <div class="col-lg-4 col-md-12 right-box">
@@ -38,5 +40,10 @@
 
   </div>
 </div>
+
+<script>
+    $('#article').trumbowyg();
+</script>
+
 </body>
 </html>
