@@ -8,6 +8,7 @@ import pl.wiki.model.Tag;
 
 import java.util.Optional;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class TagService {
@@ -29,5 +30,11 @@ public class TagService {
 
     public void deleteTag(Long id){
         tagRepository.deleteById(id);
+    }
+
+    public Set<Tag> getAllByIds (List<Long> ids){
+        List<Tag> allById = tagRepository.findAllById(ids);
+        Set<Tag> tags = Set.copyOf(allById);
+        return tags;
     }
 }

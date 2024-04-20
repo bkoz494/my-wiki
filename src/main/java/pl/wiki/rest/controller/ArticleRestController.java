@@ -7,16 +7,21 @@ import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 import pl.wiki.model.Article;
+import pl.wiki.model.Tag;
 import pl.wiki.service.ArticleService;
+import pl.wiki.service.TagService;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @Slf4j
 public class ArticleRestController {
     @Autowired
     private ArticleService articleService;
+    @Autowired
+    private TagService tagService;
 
     @GetMapping("/articles")
     public List<Article> getArticles(){
@@ -49,5 +54,12 @@ public class ArticleRestController {
     @DeleteMapping("/articles/{id}")
     public void deleteArticle(@PathVariable("id") Long id){
         articleService.delete(id);
+    }
+
+    @PutMapping("/articles/{id}/tags/add")
+    public Article addTagsToArticle(@PathVariable("id") Long id, @RequestBody List<Long> tagsIds){
+        Set<Tag> tags = tagService.getAllByIds(tagsIds);
+        Article article = articleService.get(id);
+        return articleService.addTagsToArticle(article, tags);
     }
 }

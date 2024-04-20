@@ -19,6 +19,7 @@ public class Article {
     String text;
     String authorId;
     LocalDateTime placedAt;
+//    Picture titlePicture;
     @ManyToMany
     @JoinTable(
         name = "article_tag",
@@ -34,6 +35,10 @@ public class Article {
 
     public void addTag(Tag tag){
         this.tags.add(tag);
+    }
+
+    public void addTags(Set<Tag> tags){
+        this.tags.addAll(tags);
     }
 
     public void removeTag(Tag tag) {

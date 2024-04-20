@@ -1,13 +1,14 @@
 package pl.wiki.service;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.wiki.dao.ArticleRepository;
 import pl.wiki.model.Article;
+import pl.wiki.model.Tag;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class ArticleService {
@@ -29,5 +30,14 @@ public class ArticleService {
 
     public void delete(Long id){
         articleRepo.deleteById(id);
+    }
+
+    public Article addTagsToArticle(Article article, Set<Tag> tags){
+        article.addTags(tags);
+        return articleRepo.save(article);
+    }
+
+    public Article getArticleWithTags(Long articleId) {
+        return articleRepo.findByIdJoinFetchTag(articleId);
     }
 }

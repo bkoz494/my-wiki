@@ -27,7 +27,7 @@
         <a class="nav-link" th:href="@{/demo}">demo</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" th:href="@{/articleList}">Articles</a>
+        <a class="nav-link" th:href="@{/articleList}">articles</a>
       </li>
     </ul>
     <form class="form-inline mt-2 mt-md-0">
@@ -43,17 +43,18 @@
     <div class="row clearfix">
       <div class="col-lg-8 col-md-12 left-box">
 
-        <div class="card single_post">
+        <div th:each="article : ${articles}" class="card single_post">
           <div class="body">
-            <div class="img-post">
+            <!--<div class="img-post">
               <img class="d-block img-fluid" src="https://www.bootdey.com/image/800x280/FFB6C1/000000" alt="First slide">
-            </div>
-            <h3><a th:href="@{/demo}">All photographs are accurate</a></h3>
-            <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal</p>
+            </div>-->
+            <h3><a th:text="${article.title}" th:href="@{/demo}">Title</a></h3>
+<!--            POCZĄTEK ARTUKUŁU -->
+<!--            <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal</p>-->
           </div>
           <div class="footer">
             <div class="actions">
-              <a href="javascript:void(0);" class="btn btn-outline-secondary">Continue Reading</a>
+              <a th:href="@{/demo}" class="btn btn-outline-secondary">Continue Reading</a>
             </div>
           </div>
         </div>
@@ -73,17 +74,11 @@
           </div>
           <div class="widget widget-tags">
             <div class="widget-title">
-              <h3>Latest Tags</h3>
+              <h3>Tags</h3>
             </div>
             <div class="widget-body">
               <div class="nav tag-cloud">
-                <a href="#">Design</a>
-                <a href="#">Development</a>
-                <a href="#">Travel</a>
-                <a href="#">Web Design</a>
-                <a href="#">Marketing</a>
-                <a href="#">Research</a>
-                <a href="#">Managment</a>
+                <a th:each="tag : ${tags}" href="#" th:text="${tag.tagName}">Tag</a>
               </div>
             </div>
           </div>
