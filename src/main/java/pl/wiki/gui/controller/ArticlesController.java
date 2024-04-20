@@ -45,4 +45,10 @@ public class ArticlesController {
     public RedirectView redirectToArticleList(){
         return new RedirectView("articleList");
     }
+
+    @GetMapping("/addArticle")
+    public String addArticle(Model model){
+        model.addAttribute("article", new Article());
+        return "addArticle";
+    }
 }

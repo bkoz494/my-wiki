@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <div th:replace="headers :: headers"></div>
+  <link th:href="@{/css/articleList.css}" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div th:replace="fragments :: navigation">Navigation bar</div>
+
+<div id="main-content" class="blog-page gray-bg">
+  <div class="container">
+    <div class="row clearfix">
+      <div class="col-lg-8 col-md-12 left-box">
+        <h3>Add Title</h3>
+        <input type="text" class="form-control" th:field="${article.title}">
+        <h3>Add article content</h3>
+        <textarea class="form-control" rows="5" th:firld="${article.text}"></textarea>
+
+      </div>
+      <div class="col-lg-4 col-md-12 right-box">
+        <div class="card">
+          <div class="header">
+            <h2>Categories Clouds</h2>
+          </div>
+          <div class="widget widget-tags">
+            <div class="widget-title">
+              <h3>Tags</h3>
+            </div>
+            <div class="widget-body">
+              <div class="nav tag-cloud">
+<!--                <a th:each="tag : ${tags}" href="#" th:text="${tag.tagName}">Tag</a>-->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
