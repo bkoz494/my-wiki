@@ -12,11 +12,6 @@ public class DemoController {
         return "welcome";
     }
 
-    @GetMapping("/demo")
-    public String demoPage(){
-        return "article";
-    }
-
   /*  @GetMapping("/articleList")
     public String articleListPage(){
         return "articleList";

@@ -24,9 +24,6 @@
         <a class="nav-link" th:href="@{/}">welcome</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" th:href="@{/demo}">demo</a>
-      </li>
-      <li class="nav-item">
         <a class="nav-link" th:href="@{/articleList}">articles</a>
       </li>
     </ul>
@@ -48,13 +45,13 @@
             <!--<div class="img-post">
               <img class="d-block img-fluid" src="https://www.bootdey.com/image/800x280/FFB6C1/000000" alt="First slide">
             </div>-->
-            <h3><a th:text="${article.title}" th:href="@{/demo}">Title</a></h3>
+            <h3><a th:text="${article.title}" th:href="@{/readArticle/{id}(id=${article.id})}">Title</a></h3>
 <!--            POCZĄTEK ARTUKUŁU -->
 <!--            <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal</p>-->
           </div>
           <div class="footer">
             <div class="actions">
-              <a th:href="@{/demo}" class="btn btn-outline-secondary">Continue Reading</a>
+              <a th:href="@{/readArticle/{id}(id=${article.id})}" class="btn btn-outline-secondary">Continue Reading</a>
             </div>
           </div>
         </div>
