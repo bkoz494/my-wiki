@@ -1,22 +1,28 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <div th:replace="headers :: headers"></div>
+    <div th:replace="~{headers :: headers}"></div>
     <link th:href="@{/css/articleList.css}" rel="stylesheet" type="text/css"/>
     <script src="trumbowyg/dist/trumbowyg.min.js"></script>
     <link rel="stylesheet" href="trumbowyg/dist/ui/trumbowyg.min.css">
 </head>
 <body>
-<div th:replace="fragments :: navigation">Navigation bar</div>
+<div th:replace="~{fragments :: navigation}">Navigation bar</div>
 
 <div id="main-content" class="blog-page gray-bg">
   <div class="container">
     <div class="row clearfix">
       <div class="col-lg-8 col-md-12 left-box">
-        <h3>Add Title</h3>
-        <input type="text" class="form-control" th:field="${article.title}">
-        <h3>Add article content</h3>
-        <textarea id="article" class="form-control" rows="5" th:firld="${article.text}"></textarea>
+          <form method="post" th:action="@{/saveArticle}" th:object="${article}">
+            <div class="d-flex justify-content-end">
+                <button class="btn btn-success" type="submit">Save</button>
+            </div>
+            <h3>Add Title</h3>
+            <input type="text" class="form-control" th:field="${article.title}">
+            <h3>Add article content</h3>
+            <textarea id="article" class="form-control" rows="5" th:field="${article.text}"></textarea>
+
+          </form>
 
       </div>
       <div class="col-lg-4 col-md-12 right-box">

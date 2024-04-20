@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-  <div th:replace="headers :: headers"></div>
+  <div th:replace="~{headers :: headers}"></div>
   <link th:href="@{/css/articleList.css}" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-<div th:replace="fragments :: navigation">Navigation bar</div>
+<div th:replace="~{fragments :: navigation}">Navigation bar</div>
 
 <div id="main-content" class="blog-page gray-bg">
   <div class="container">

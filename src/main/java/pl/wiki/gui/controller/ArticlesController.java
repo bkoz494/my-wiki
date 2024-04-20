@@ -1,10 +1,14 @@
 package pl.wiki.gui.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.view.RedirectView;
 import pl.wiki.model.Article;
 import pl.wiki.model.Tag;
@@ -50,5 +54,14 @@ public class ArticlesController {
     public String addArticle(Model model){
         model.addAttribute("article", new Article());
         return "addArticle";
+    }
+
+    @PostMapping("/saveArticle")
+    public String saveArticle(@ModelAttribute Article article){
+        Article saved = articleService.save(article);
+        DefaultOidcUser user = (DefaultOidcUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String userId = (String) user.getClaims().get("sub");
+        article.setAuthorId(userId);
+        return "redirect:/readArticle/" + saved.getId();
     }
 }

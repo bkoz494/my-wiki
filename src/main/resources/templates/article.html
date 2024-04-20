@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <div th:replace="headers :: headers"></div>
+    <div th:replace="~{headers :: headers}"></div>
     <link th:href="@{/css/article.css}" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-<div th:replace="fragments :: navigation">Navigation bar</div>
+<div th:replace="~{fragments :: navigation}">Navigation bar</div>
 
 <div class="blog-single gray-bg">
     <div class="container">
@@ -30,7 +30,7 @@
                         </div>
                     </div>
                     <div class="article-content">
-                        <p th:text="${article.text}"></p>
+                        <p th:utext="${article.text}"></p>
                     </div>
                     <div class="nav tag-cloud">
                         <span th:each="tag : ${tags}"> <a th:text="${tag.tagName}" href="#"></a> </span>
