@@ -2,11 +2,20 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <div th:replace="~{headers :: headers}"></div>
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body>
     <div th:replace="~{fragments :: navigation}">Navigation bar</div>
     <main class="container">
+        <div style="text-align: right;" class="row">
+            <div class="col-md-offset-7 col-sm-12 col-xs-12">
+                <a class="contrast"
+                   th:href="@{/editArticle/{id}(id=${article.id})}"
+                   data-tooltip="edit">
+                    <i class="bi bi-pencil-square"></i>
+                </a>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-8 col-sm-12 col-sx-12">
                 <hgroup>

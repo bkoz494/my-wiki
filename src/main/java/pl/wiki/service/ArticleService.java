@@ -40,4 +40,8 @@ public class ArticleService {
     public Article getArticleWithTags(Long articleId) {
         return articleRepo.findByIdJoinFetchTag(articleId);
     }
+
+    public Article updateArticle(Article article) {
+        return articleRepo.save(article);
+    }
 }

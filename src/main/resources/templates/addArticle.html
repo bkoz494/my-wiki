@@ -3,15 +3,16 @@
 <head>
   <div th:replace="~{headers :: headers}"></div>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script src="trumbowyg/dist/trumbowyg.min.js"></script>
-  <link rel="stylesheet" href="trumbowyg/dist/ui/trumbowyg.min.css">
+  <script th:src="@{/trumbowyg/dist/trumbowyg.min.js}"></script>
+  <link rel="stylesheet" th:href="@{/trumbowyg/dist/ui/trumbowyg.min.css}">
 </head>
 <body>
 <div th:replace="~{fragments :: navigation}">Navigation bar</div>
 <main class="container">
   <div class="row">
     <div class="col-md-8 col-sm-12">
-      <form method="post" th:action="@{/saveArticle}" th:object="${article}">
+      <form method="post" th:action="${editMode} ? @{/updateArticle} : @{/saveArticle}" th:object="${article}">
+        <input th:if="${editMode}" type="hidden" th:field="${article.id}" th:value="${article.id}">
         <label>
           Title
           <input type="text" th:field="${article.title}">

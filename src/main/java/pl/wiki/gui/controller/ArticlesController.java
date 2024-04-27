@@ -63,10 +63,20 @@ public class ArticlesController {
     }
 
     @GetMapping("/addArticle")
-    public String addArticle2(Model model){
+    public String addArticle(Model model){
         model.addAttribute("article", new Article());
         List<Tag> tags = tagService.getAll();
         model.addAttribute("tags", tags);
+        return "addArticle";
+    }
+
+    @GetMapping("editArticle/{id}")
+    public String editArticle(@PathVariable("id") Long id, Model model){
+        Article article = articleService.get(id);
+        model.addAttribute("article", article);
+        List<Tag> tags = tagService.getAll();
+        model.addAttribute("tags", tags);
+        model.addAttribute("editMode", true);
         return "addArticle";
     }
 
@@ -83,5 +93,13 @@ public class ArticlesController {
     public String deleteArticle(@PathVariable("id") Long articleId){
         articleService.delete(articleId);
         return "redirect:/articleList";
+    }
+
+    @PostMapping("/updateArticle")
+    public String updateArticle(@ModelAttribute("article") Article updatedArticle){
+        DefaultOidcUser user = (DefaultOidcUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        updatedArticle.setAuthorId((String) user.getClaims().get("sub"));
+        Article article = articleService.updateArticle(updatedArticle);
+        return "redirect:/readArticle/" + article.getId();
     }
 }
