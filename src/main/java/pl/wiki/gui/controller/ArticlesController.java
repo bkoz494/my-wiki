@@ -39,10 +39,11 @@ public class ArticlesController {
         Article article = articleService.getArticleWithTags(articleId);
         model.addAttribute("article", article);
         Set<Tag> tags = article.getTags();
-        model.addAttribute("tags", tags);
+        model.addAttribute("articleTags", tags);
         List<Tag> allTags = tagService.getAll();
-        model.addAttribute("allTags", allTags);
-        return "article";
+        model.addAttribute("tags", allTags);
+
+        return "article2";
     }
 
     @GetMapping("/")
@@ -51,8 +52,10 @@ public class ArticlesController {
     }
 
     @GetMapping("/addArticle")
-    public String addArticle(Model model){
+    public String addArticle2(Model model){
         model.addAttribute("article", new Article());
+        List<Tag> tags = tagService.getAll();
+        model.addAttribute("tags", tags);
         return "addArticle";
     }
 
@@ -63,5 +66,11 @@ public class ArticlesController {
         String userId = (String) user.getClaims().get("sub");
         article.setAuthorId(userId);
         return "redirect:/readArticle/" + saved.getId();
+    }
+
+    @GetMapping("deleteArticle/{id}")
+    public String deleteArticle(@PathVariable("id") Long articleId){
+        articleService.delete(articleId);
+        return "redirect:/articleList";
     }
 }

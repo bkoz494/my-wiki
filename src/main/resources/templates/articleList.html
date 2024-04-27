@@ -1,63 +1,82 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-  <div th:replace="~{headers :: headers}"></div>
-  <link th:href="@{/css/articleList.css}" rel="stylesheet" type="text/css"/>
+    <div th:replace="~{headers :: headers}"></div>
 </head>
 <body>
-<div th:replace="~{fragments :: navigation}">Navigation bar</div>
+    <div th:replace="~{fragments :: navigation}">Navigation bar</div>
+    <main class="container">
+        <div class="row">
+            <div class="col-md-8 col-sm-12 col-xs-12">
+                <article th:each="article : ${articles}">
+                    <header>
+                        <h3>
+                            <a th:text="${article.title}"
+                               th:href="@{/readArticle/{id}(id=${article.id})}"
+                               class="contrast">
+                                Title
+                            </a>
+                        </h3>
+                    </header>
 
-<div id="main-content" class="blog-page gray-bg">
-  <div class="container">
-    <div class="row clearfix">
-      <div class="col-lg-8 col-md-12 left-box">
+                    <footer class="grid">
+                        <a role="button" th:href="@{/readArticle/{id}(id=${article.id})}"
+                           class="outline">
+                            Continue reading
+                        </a>
+                        <a id="deleteButton"
+                           role="button"
+                           class="secondary outline"
+                           th:data-target="${article.id}"
+                           onclick="toggleModal(event)">
+                            Delete
+                        </a>
 
-        <div th:each="article : ${articles}" class="card single_post">
-          <div class="body">
-            <!--<div class="img-post">
-              <img class="d-block img-fluid" src="https://www.bootdey.com/image/800x280/FFB6C1/000000" alt="First slide">
-            </div>-->
-            <h3><a th:text="${article.title}" th:href="@{/readArticle/{id}(id=${article.id})}">Title</a></h3>
-<!--            POCZĄTEK ARTUKUŁU -->
-<!--            <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal</p>-->
-          </div>
-          <div class="footer">
-            <div class="actions">
-              <a th:href="@{/readArticle/{id}(id=${article.id})}" class="btn btn-outline-secondary">Continue Reading</a>
+                        <!--        confirmation modal -->
+                        <dialog th:id="${article.id}">
+                            <article>
+                                <header>
+                                    <button
+                                            aria-label="Close"
+                                            rel="prev"
+                                            th:data-target="${article.id}"
+                                            onclick="toggleModal(event)"></button>
+                                    <p>
+                                        <strong id="modalTitle">Warning!</strong>
+                                    </p>
+                                </header>
+                                <p>
+                                    Are you sure you want to delete
+                                    <strong th:text="${article.title}" id="articleTitle">
+                                        Article title
+                                    </strong>
+                                </p>
+                                <footer>
+                                    <button role="button"
+                                            class="secondary"
+                                            th:data-target="${article.id}"
+                                            onclick="toggleModal(event)">No</button>
+                                    <a
+                                            role="button"
+                                            id="confirmButton"
+                                            autofocus
+                                            th:href="@{deleteArticle/{id}(id=${article.id})}"
+                                    >
+                                        Yes
+                                    </a>
+                                </footer>
+                            </article>
+                        </dialog>
+
+                    </footer>
+                </article>
             </div>
-          </div>
+            <div class="col-md-4 col-sm-12 col-xs-12">
+                <div th:replace="~{fragments :: tagsCard}"></div>
+            </div>
         </div>
+    </main>
 
-        <ul class="pagination pagination-primary">
-          <li class="page-item"><a class="page-link" href="javascript:void(0);">Previous</a></li>
-          <li class="page-item active"><a class="page-link" href="javascript:void(0);">1</a></li>
-          <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
-          <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
-          <li class="page-item"><a class="page-link" href="javascript:void(0);">Next</a></li>
-        </ul>
-      </div>
-      <div class="col-lg-4 col-md-12 right-box">
-        <div class="card">
-          <div class="header">
-            <h2>Categories Clouds</h2>
-          </div>
-          <div class="widget widget-tags">
-            <div class="widget-title">
-              <h3>Tags</h3>
-            </div>
-            <div class="widget-body">
-              <div class="nav tag-cloud">
-                <a th:each="tag : ${tags}" href="#" th:text="${tag.tagName}">Tag</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<script type="text/javascript" th:src="@{/js/navigation.js}"></script>
+<script th:src="@{js/modal.js}"></script>
 </body>
 </html>

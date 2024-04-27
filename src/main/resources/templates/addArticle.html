@@ -1,55 +1,36 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <div th:replace="~{headers :: headers}"></div>
-    <link th:href="@{/css/articleList.css}" rel="stylesheet" type="text/css"/>
-    <script src="trumbowyg/dist/trumbowyg.min.js"></script>
-    <link rel="stylesheet" href="trumbowyg/dist/ui/trumbowyg.min.css">
+  <div th:replace="~{headers :: headers}"></div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="trumbowyg/dist/trumbowyg.min.js"></script>
+  <link rel="stylesheet" href="trumbowyg/dist/ui/trumbowyg.min.css">
 </head>
 <body>
 <div th:replace="~{fragments :: navigation}">Navigation bar</div>
-
-<div id="main-content" class="blog-page gray-bg">
-  <div class="container">
-    <div class="row clearfix">
-      <div class="col-lg-8 col-md-12 left-box">
-          <form method="post" th:action="@{/saveArticle}" th:object="${article}">
-            <div class="d-flex justify-content-end">
-                <button class="btn btn-success" type="submit">Save</button>
-            </div>
-            <h3>Add Title</h3>
-            <input type="text" class="form-control" th:field="${article.title}">
-            <h3>Add article content</h3>
-            <textarea id="article" class="form-control" rows="5" th:field="${article.text}"></textarea>
-
-          </form>
-
-      </div>
-      <div class="col-lg-4 col-md-12 right-box">
-        <div class="card">
-          <div class="header">
-            <h2>Categories Clouds</h2>
-          </div>
-          <div class="widget widget-tags">
-            <div class="widget-title">
-              <h3>Tags</h3>
-            </div>
-            <div class="widget-body">
-              <div class="nav tag-cloud">
-<!--                <a th:each="tag : ${tags}" href="#" th:text="${tag.tagName}">Tag</a>-->
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+<main class="container">
+  <div class="row">
+    <div class="col-md-8 col-sm-12">
+      <form method="post" th:action="@{/saveArticle}" th:object="${article}">
+        <label>
+          Title
+          <input type="text" th:field="${article.title}">
+        </label>
+        <label>
+          Article content
+          <textarea id="article" th:field="${article.text}"></textarea>
+        </label>
+        <input type="submit" value="save">
+      </form>
     </div>
-
+    <div class="col-md-4 col-sm-12">
+        <div th:replace="~{fragments :: tagsCard}"></div>
+    </div>
   </div>
-</div>
+</main>
 
 <script>
     $('#article').trumbowyg();
 </script>
-
 </body>
 </html>
