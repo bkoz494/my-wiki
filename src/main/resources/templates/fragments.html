@@ -14,11 +14,12 @@
                 <li><a th:href="@{/addArticle}" class="contrast">Add article</a></li>
                 <li><a th:href="@{/articleList}" class="contrast">Articles list</a></li>
                 <li>
-                    <form role="search" method="post" action="#">
+                    <form role="search" method="post" th:action="@{/search}" th:object="${searchDto}">
                         <input type="search"
                                name="search"
                                placeholder="Search"
-                               aria-label="Search"/>
+                               aria-label="Search"
+                               th:field="*{title}"/>
                         <input type="submit" class="outline secondary" value="Search"/>
                     </form>
                 </li>

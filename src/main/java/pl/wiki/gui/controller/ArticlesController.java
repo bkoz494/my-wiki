@@ -1,5 +1,8 @@
 package pl.wiki.gui.controller;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -101,5 +104,24 @@ public class ArticlesController {
         updatedArticle.setAuthorId((String) user.getClaims().get("sub"));
         Article article = articleService.updateArticle(updatedArticle);
         return "redirect:/readArticle/" + article.getId();
+    }
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    class SearchDto {
+        String title;
+    }
+
+    @ModelAttribute
+    public void addTitleDTOToModel(Model model){
+
+        model.addAttribute("searchDto", new SearchDto());
+    }
+
+    @PostMapping("/search")
+    public String search(@ModelAttribute SearchDto searchDto, Model model){
+        List<Article> articles = articleService.searchByTitle(searchDto.getTitle());
+        model.addAttribute("articles", articles);
+        return "articleList";
     }
 }

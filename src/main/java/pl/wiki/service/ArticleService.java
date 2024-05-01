@@ -44,4 +44,8 @@ public class ArticleService {
     public Article updateArticle(Article article) {
         return articleRepo.save(article);
     }
+
+    public List<Article> searchByTitle(String title){
+        return articleRepo.findByTitleLike(title);
+    }
 }
